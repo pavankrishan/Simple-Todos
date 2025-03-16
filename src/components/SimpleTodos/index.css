@@ -1,0 +1,14 @@
+/* Write your CSS here */
+.bgCon {
+  background-color: #ffc2a0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.cardCon {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

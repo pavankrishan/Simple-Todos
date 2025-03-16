@@ -1,0 +1,16 @@
+/* Write your CSS here */
+.item {
+  display: flex;
+  flex-wrap: wrap;
+}
+.btn {
+  background-color: white;
+  color: rgb(212, 87, 108);
+  border: 1px solid rgb(223, 90, 112);
+  margin-right: 30px;
+  margin: 10px;
+}
+.title {
+  display: flex;
+  flex-grow: 1;
+}
