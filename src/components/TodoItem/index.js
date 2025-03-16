@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import {Component} from 'react'
 import './index.css'
 
 class TodoItem extends Component {
@@ -8,29 +8,29 @@ class TodoItem extends Component {
   }
 
   handleEditClick = () => {
-    this.setState(prevState => ({ isEditing: !prevState.isEditing }))
+    this.setState(prevState => ({isEditing: !prevState.isEditing}))
   }
 
   handleChange = event => {
-    this.setState({ updatedTitle: event.target.value })
+    this.setState({updatedTitle: event.target.value})
   }
 
   handleSave = () => {
-    const { itemDetails, updateTodo } = this.props
-    const { updatedTitle } = this.state
+    const {itemDetails, updateTodo} = this.props
+    const {updatedTitle} = this.state
     updateTodo(itemDetails.id, updatedTitle)
-    this.setState({ isEditing: false })
+    this.setState({isEditing: false})
   }
 
   handleCheckboxChange = () => {
-    const { itemDetails, toggleComplete } = this.props
+    const {itemDetails, toggleComplete} = this.props
     toggleComplete(itemDetails.id)
   }
 
   render() {
-    const { itemDetails, deleteTodo } = this.props
-    const { isEditing, updatedTitle } = this.state
-    const { id, title, isCompleted } = itemDetails
+    const {itemDetails, deleteTodo} = this.props
+    const {isEditing, updatedTitle} = this.state
+    const {id, title, isCompleted} = itemDetails
 
     return (
       <li className="todo-item">
@@ -51,7 +51,10 @@ class TodoItem extends Component {
           <p className={`title ${isCompleted ? 'completed' : ''}`}>{title}</p>
         )}
 
-        <button onClick={isEditing ? this.handleSave : this.handleEditClick} className="edit-btn">
+        <button
+          onClick={isEditing ? this.handleSave : this.handleEditClick}
+          className="edit-btn"
+        >
           {isEditing ? 'Save' : 'Edit'}
         </button>
         <button onClick={() => deleteTodo(id)} className="delete-btn">

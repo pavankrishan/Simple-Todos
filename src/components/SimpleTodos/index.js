@@ -1,16 +1,37 @@
-import { Component } from 'react'
+import {Component} from 'react'
+import {v4 as uuidv4} from 'uuid'
 import TodoItem from '../TodoItem'
 import './index.css'
 
 const initialTodosList = [
-  { id: 1, title: 'Book the ticket for today evening', isCompleted: false },
-  { id: 2, title: 'Rent the movie for tomorrow movie night', isCompleted: false },
-  { id: 3, title: 'Confirm the slot for the yoga session tomorrow morning', isCompleted: false },
-  { id: 4, title: 'Drop the parcel at Bloomingdale', isCompleted: false },
-  { id: 5, title: 'Order fruits on Big Basket', isCompleted: false },
-  { id: 6, title: 'Fix the production issue', isCompleted: false },
-  { id: 7, title: 'Confirm my slot for Saturday Night', isCompleted: false },
-  { id: 8, title: 'Get essentials for Sunday car wash', isCompleted: false },
+  {
+    id: uuidv4(),
+    title: 'Book the ticket for today evening',
+    isCompleted: false,
+  },
+  {
+    id: uuidv4(),
+    title: 'Rent the movie for tomorrow movie night',
+    isCompleted: false,
+  },
+  {
+    id: uuidv4(),
+    title: 'Confirm the slot for the yoga session tomorrow morning',
+    isCompleted: false,
+  },
+  {id: uuidv4(), title: 'Drop the parcel at Bloomingdale', isCompleted: false},
+  {id: uuidv4(), title: 'Order fruits on Big Basket', isCompleted: false},
+  {id: uuidv4(), title: 'Fix the production issue', isCompleted: false},
+  {
+    id: uuidv4(),
+    title: 'Confirm my slot for Saturday Night',
+    isCompleted: false,
+  },
+  {
+    id: uuidv4(),
+    title: 'Get essentials for Sunday car wash',
+    isCompleted: false,
+  },
 ]
 
 class SimpleTodos extends Component {
@@ -20,22 +41,27 @@ class SimpleTodos extends Component {
   }
 
   handleInputChange = event => {
-    this.setState({ newTodo: event.target.value })
+    this.setState({newTodo: event.target.value})
   }
 
   addTodo = () => {
-    const { newTodo, todoList } = this.state
+    const {newTodo} = this.state
     if (newTodo.trim() === '') return
 
     const parts = newTodo.trim().split(' ')
-    const count = parseInt(parts[parts.length - 1], 10)
-    const title = isNaN(count) ? newTodo : parts.slice(0, -1).join(' ')
+    const count = Number(parts[parts.length - 1]) || 1
+    const title = Number(parts[parts.length - 1])
+      ? parts.slice(0, -1).join(' ')
+      : newTodo
 
-    const newTodos = Array.from({ length: isNaN(count) ? 1 : count }, (_, index) => ({
-      id: Date.now() + index,
-      title,
-      isCompleted: false,
-    }))
+    const newTodos = []
+    for (let i = 0; i < count; i++) {
+      newTodos.push({
+        id: uuidv4(),
+        title,
+        isCompleted: false,
+      })
+    }
 
     this.setState(prevState => ({
       todoList: [...prevState.todoList, ...newTodos],
@@ -52,7 +78,7 @@ class SimpleTodos extends Component {
   updateTodo = (id, newTitle) => {
     this.setState(prevState => ({
       todoList: prevState.todoList.map(todo =>
-        todo.id === id ? { ...todo, title: newTitle } : todo
+        todo.id === id ? {...todo, title: newTitle} : todo,
       ),
     }))
   }
@@ -60,13 +86,13 @@ class SimpleTodos extends Component {
   toggleComplete = id => {
     this.setState(prevState => ({
       todoList: prevState.todoList.map(todo =>
-        todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
+        todo.id === id ? {...todo, isCompleted: !todo.isCompleted} : todo,
       ),
     }))
   }
 
   render() {
-    const { todoList, newTodo } = this.state
+    const {todoList, newTodo} = this.state
     return (
       <div className="bgCon">
         <div className="cardCon">
@@ -79,7 +105,9 @@ class SimpleTodos extends Component {
               placeholder="Enter todo title (or 'title number')"
               className="todo-input"
             />
-            <button onClick={this.addTodo} className="add-btn">Add</button>
+            <button onClick={this.addTodo} className="add-btn">
+              Add
+            </button>
           </div>
           <ul className="todo-list">
             {todoList.map(eachItem => (
